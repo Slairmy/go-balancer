@@ -2,13 +2,19 @@ schema: http                  # support http and https
 port: 8089                    # port for balancer
 ssl_certificate:
 ssl_certificate_key:
-tcp_health_check: true        # 是否开启健康检查
+health_check: true        # 是否开启健康检查
 health_check_interval: 3      # 健康检查间隔
 # 负载均衡处理最大请求数 0=无限制
 max_allowed: 100
 location:                     # route matching for reverse proxy
   - pattern: /
     proxy_pass:                   # URL of the reverse proxy
+      - "http://127.0.0.1:9505"
+      - "http://127.0.0.1:9501"
+      - "http://127.0.0.1:9503"
+    balance_mode: round-robin     # 负载均衡算法
+  - pattern: /other-path
+    proxy_pass: # URL of the reverse proxy
       - "http://127.0.0.1:9505"
       - "http://127.0.0.1:9501"
       - "http://127.0.0.1:9503"

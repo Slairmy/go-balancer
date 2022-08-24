@@ -2,7 +2,6 @@ package main
 
 import (
 	"Balancer/proxy"
-	"fmt"
 	"github.com/gorilla/mux"
 	"log"
 	"net/http"
@@ -27,10 +26,14 @@ func main() {
 	router := mux.NewRouter()
 
 	for _, l := range config.Location {
-		fmt.Printf("%+v", l)
 		httpProxy, err := proxy.NewHTTPProxy(l.ProxyPass, l.BalanceMode)
 		if err != nil {
 			log.Fatalf("create proxy error: %s", err)
+		}
+
+		// 如果配置了健康检查
+		if config.HealthCheck {
+			httpProxy.HealthCheck(config.HealthCheckInterval)
 		}
 
 		router.Handle(l.Pattern, httpProxy)
