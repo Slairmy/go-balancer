@@ -5,7 +5,7 @@ ssl_certificate_key:
 health_check: true        # 是否开启健康检查
 health_check_interval: 3      # 健康检查间隔
 # 负载均衡处理最大请求数 0=无限制
-max_allowed: 100
+max_allowed: 50
 location:                     # route matching for reverse proxy
   - pattern: /
     proxy_pass:                   # URL of the reverse proxy

@@ -14,6 +14,7 @@ type Config struct {
 	SSLCertificate      string      `yaml:"ssl_certificate"` // https 需要的证书
 	HealthCheck         bool        `yaml:"health_check"`
 	HealthCheckInterval uint        `yaml:"health_check_interval"`
+	MaxAllowed          uint        `yaml:"max_allowed"` // 最大并发请求
 }
 
 type Location struct {

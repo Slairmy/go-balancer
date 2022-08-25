@@ -1,6 +1,7 @@
 package main
 
 import (
+	"Balancer/middleware"
 	"Balancer/proxy"
 	"github.com/gorilla/mux"
 	"log"
@@ -37,6 +38,11 @@ func main() {
 		}
 
 		router.Handle(l.Pattern, httpProxy)
+	}
+
+	if config.MaxAllowed > 0 {
+		// 允许最大的并发请求数 -- 设置中间件
+		router.Use(middleware.MaxAllowedMiddleware(config.MaxAllowed))
 	}
 
 	srv := http.Server{
