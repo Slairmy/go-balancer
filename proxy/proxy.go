@@ -90,8 +90,8 @@ func (h *HTTPProxy) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// 负载均衡服务器 + 1
-	h.lb.Add(host)
+	// 主机负载 + 1
+	h.lb.Inc(host)
 	defer h.lb.Done(host)
 
 	h.hostMap[host].ServeHTTP(w, r)
